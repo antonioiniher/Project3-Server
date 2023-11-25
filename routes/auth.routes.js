@@ -8,10 +8,10 @@ const saltRounds = 10
 
 router.post('/signup', (req, res, next) => {
 
-  const { email, password, username } = req.body
+  const { email, password, username, role, avatar, address, phoneNumber, idSkype } = req.body
 
-  if (password.length < 2) {
-    res.status(400).json({ message: 'Password must have at least 3 characters' })
+  if (password.length < 5) {
+    res.status(400).json({ message: 'La contraseña debe tener mínimo 5 caracteres.' })
     return
   }
 
@@ -21,14 +21,14 @@ router.post('/signup', (req, res, next) => {
     .then((foundUser) => {
 
       if (foundUser) {
-        res.status(400).json({ message: "User already exists." })
+        res.status(400).json({ message: "Este usuario ya existe." })
         return
       }
 
       const salt = bcrypt.genSaltSync(saltRounds)
       const hashedPassword = bcrypt.hashSync(password, salt)
 
-      return User.create({ email, password: hashedPassword, username })
+      return User.create({ email, password: hashedPassword, username, role, avatar, address, phoneNumber, idSkype })
     })
     .then(() => res.sendStatus(201))
     .catch(err => next(err))
