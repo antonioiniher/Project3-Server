@@ -15,7 +15,6 @@ router.post('/signup', (req, res, next) => {
     return
   }
 
-
   User
     .findOne({ email })
     .then((foundUser) => {
@@ -32,6 +31,7 @@ router.post('/signup', (req, res, next) => {
     })
     .then(() => res.sendStatus(201))
     .catch(err => next(err))
+
 })
 
 
@@ -85,6 +85,7 @@ router.get('/verify', verifyToken, (req, res, next) => {
   const loggedUser = req.payload
 
   res.json({ loggedUser })
+
 })
 
 
