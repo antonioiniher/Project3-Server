@@ -43,7 +43,7 @@ router.post('/login', (req, res, next) => {
   const { email, password } = req.body
 
   if (email === '' || password === '') {
-    res.status(400).json({ message: "Provide email and password." });
+    res.status(400).json({ message: "Los campos de email y contraseña son obligatorios." });
     return;
   }
 
@@ -52,14 +52,14 @@ router.post('/login', (req, res, next) => {
     .then((foundUser) => {
 
       if (!foundUser) {
-        res.status(401).json({ message: "User not found." })
-        return;
+        res.status(401).json({ message: "Usuario no encontrado." })
+        return
       }
 
       if (bcrypt.compareSync(password, foundUser.password)) {
 
-        const { _id, email, username } = foundUser;
-        const payload = { _id, email, username }
+        const { _id, email, username, role } = foundUser;
+        const payload = { _id, email, username, role }
 
         const authToken = jwt.sign(
           payload,
@@ -71,7 +71,7 @@ router.post('/login', (req, res, next) => {
 
       }
       else {
-        res.status(401).json({ message: "Incorrect password" });
+        res.status(401).json({ message: "Contraseña incorrecta" });
       }
 
     })
