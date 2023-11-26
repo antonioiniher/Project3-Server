@@ -71,7 +71,7 @@ router.post('/login', (req, res, next) => {
 
       }
       else {
-        res.status(401).json({ message: "Contraseña incorrecta" });
+        res.status(401).json({ message: "Contraseña incorrecta." });
       }
 
     })
