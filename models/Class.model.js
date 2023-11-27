@@ -11,10 +11,10 @@ const classSchema = new Schema(
             required: [true, 'La descripción es obligatoria.'],
             minlength: [20, 'La descripción debe tener mínimo 20 caracteres.']
         },
-        languages: {
+        languages: [{
             type: String,
             required: [true, 'El lenguaje es obligatorio.']
-        },
+        }],
         owner: {
             type: Schema.Types.ObjectId,
             ref: 'User'
@@ -25,13 +25,13 @@ const classSchema = new Schema(
         }],
         classType: {
             type: String,
-            enum: ['Presencial', 'Semi-presencial', 'Remoto'],
+            enum: ['On-site', 'Hybrid', 'Remote'],
             required: [true, 'El tipo de clase es obligatorio.']
         },
         status: {
             type: String,
-            enum: ["Pendiente", "Aceptado", "Cancelado"],
-            default: "Pendiente"
+            enum: ["Pending", "Accepted", "Cancelled"],
+            default: "Pending"
         }
     },
     {

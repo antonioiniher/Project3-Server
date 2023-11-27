@@ -18,6 +18,12 @@ const userSchema = new Schema({
     minlength: [5, 'El usuario necesita mínimo 5 caracteres.'],
     trim: true,
   },
+  description: {
+    type: String,
+    required: [true, 'La descripción es obligatoria.'],
+    minlength: [20, 'La descripción necesita mínimo 20 caracteres.'],
+    maxlength: [200, 'La descripción acepta máximo 200 caracteres.']
+  },
   role: {
     type: String,
     enum: ["ADMIN", "TEACHER", "STUDENT"],
@@ -28,9 +34,18 @@ const userSchema = new Schema({
     default: "https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg"
   },
   address: {
-    type: String,
-    required: [true, 'La dirección es obligatoria.'],
-    minlength: [15, 'La dirección necesita mínimo 15 caracteres.']
+    street: {
+      type: String,
+      required: [true, 'La calle es obligatoria.']
+    },
+    city: {
+      type: String,
+      required: [true, 'La ciudad es obligatoria.']
+    },
+    country: {
+      type: String,
+      required: [true, 'El país es obligatorio.']
+    }
   },
   phoneNumber: {
     type: Number,
@@ -43,9 +58,15 @@ const userSchema = new Schema({
     trim: true,
   },
   rating: [{
-    type: Number,
-    min: [1, 'La valoración mínima permitida es 1'],
-    max: [10, 'La valoración máxima permitida es de 10.']
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    value: {
+      type: Number,
+      min: [1, 'La valoración mínima permitida es 1'],
+      max: [10, 'La valoración máxima permitida es de 10.']
+    }
   }]
 },
   {
