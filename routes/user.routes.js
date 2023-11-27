@@ -3,7 +3,7 @@ const { getUserById, editUserById, deleteUserById } = require("../controllers/us
 const { checkOwnerOr } = require("../middlewares/route-guard")
 const { verifyToken } = require("../middlewares/verifyToken")
 
-router.get('/:user_id', getUserById)
+router.get('/:user_id', verifyToken, getUserById)
 
 router.put('/edit/:user_id', verifyToken, checkOwnerOr('ADMIN'), editUserById)
 
