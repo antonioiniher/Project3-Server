@@ -8,7 +8,8 @@ const saltRounds = 10
 
 router.post('/signup', (req, res, next) => {
 
-  const { email, password, username, description, role, avatar, address, phoneNumber, idSkype } = req.body
+  const { email, password, username, description, role, avatar, street, city, country, phoneNumber, idSkype } = req.body
+  const address = { street, city, country }
 
   if (password.length < 5) {
     res.status(400).json({ message: 'La contraseña debe tener mínimo 5 caracteres.' })
