@@ -1,41 +1,12 @@
 const router = require("express").Router()
-const User = require("../models/User.model")
+const { getUserById, editUserById, deleteUserById } = require("../controllers/user.controller")
+const { checkOwnerOr } = require("../middlewares/route-guard")
+const { verifyToken } = require("../middlewares/verifyToken")
 
-router.get('/:user_id', (req, res, next) => {
+router.get('/:user_id', getUserById)
 
-    const { user_id: _id } = req.params
+router.put('/edit/:user_id', verifyToken, checkOwnerOr('ADMIN'), editUserById)
 
-    User
-        .findById(_id)
-        .then(user => res.json(user))
-        .catch(err => next(err))
-
-})
-
-router.put('/edit/:user_id', (req, res, next) => {
-
-    const { user_id: _id } = req.params
-
-    const { email, password, username, description, role, avatar, address, phoneNumber, idSkype } = req.body
-
-    User
-        .findByIdAndUpdate(_id, { email, password, username, description, role, avatar, address, phoneNumber, idSkype })
-        .then(user => res.json(user))
-        .catch(err => next(err))
-
-})
-
-router.delete('/delete/:user_id', (req, res, next) => {
-
-    const { user_id: _id } = req.params
-
-    User
-        .findByIdAndDelete(_id)
-        .then(() => res.sendStatus(200))
-        .catch(err => next(err))
-
-})
-
-
+router.delete('/delete/:user_id', verifyToken, checkOwnerOr('ADMIN'), deleteUserById)
 
 module.exports = router
