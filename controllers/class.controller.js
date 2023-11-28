@@ -32,10 +32,6 @@ const getOneClass = (req, res, next) => {
         .catch(err => next(err))
 }
 
-
-
-
-
 const editClass = (req, res, next) => {
 
     const { class_id } = req.params
