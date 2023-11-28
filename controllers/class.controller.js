@@ -16,7 +16,7 @@ const getClasses = (req, res, next) => {
 
     Class
         .find()
-        .populate({ path: "owner", select: "username _id" })
+        .populate('owner')
         .select({ title: 1, languages: 1, classType: 1, owner: 1 })
         .then(response => res.json(response))
         .catch(err => next(err))
@@ -36,6 +36,7 @@ const editClass = (req, res, next) => {
 
     const { class_id } = req.params
     const { title, description, languages, classType } = req.body
+
     Class
         .findByIdAndUpdate(class_id, { title, description, languages, classType })
         .then(response => res.json(response))
