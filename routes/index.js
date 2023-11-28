@@ -6,4 +6,6 @@ module.exports = app => {
     const UserRoutes = require("./user.routes")
     app.use("/api/user", UserRoutes)
 
+    const ClassRoutes = require("./class.routes")
+    app.use("/api/class", ClassRoutes)
 }
