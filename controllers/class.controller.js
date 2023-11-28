@@ -28,6 +28,7 @@ const getOneClass = (req, res, next) => {
 
     Class
         .findById(class_id)
+        .populate("owner")
         .then(response => res.json(response))
         .catch(err => next(err))
 }
