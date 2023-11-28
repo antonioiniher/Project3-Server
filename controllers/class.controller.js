@@ -16,7 +16,8 @@ const getClasses = (req, res, next) => {
 
     Class
         .find()
-        .select({ title: 1, languages: 1, classType: 1 })
+        .populate({ path: "owner", select: "username _id" })
+        .select({ title: 1, languages: 1, classType: 1, owner: 1 })
         .then(response => res.json(response))
         .catch(err => next(err))
 }
