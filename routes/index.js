@@ -8,4 +8,8 @@ module.exports = app => {
 
     const ClassRoutes = require("./class.routes")
     app.use("/api/class", ClassRoutes)
+
+    const UploadRoutes = require("./upload.routes")
+    app.use("/api/upload", UploadRoutes)
+
 }
