@@ -15,12 +15,10 @@ const editUserById = (req, res, next) => {
 
     const { user_id: _id } = req.params
 
-    const { email, username, description, role, avatar, street, city, country, phoneNumber, idSkype } = req.body
-
-    const address = { street, city, country }
+    const { email, username, description, role, avatar, address, phoneNumber, idSkype } = req.body
 
     User
-        .findByIdAndUpdate(_id, { email, password, username, description, role, avatar, address, phoneNumber, idSkype })
+        .findByIdAndUpdate(_id, { email, username, description, role, avatar, address, phoneNumber, idSkype })
         .then(user => res.json(user))
         .catch(err => next(err))
 
