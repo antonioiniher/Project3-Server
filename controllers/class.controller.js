@@ -44,10 +44,22 @@ const editClass = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const getClassbySearch = (req, res, next) => {
+    const language = req.query.language
+    const city = req.query.city
+    const classType = req.query.classType
+
+    Class
+        .find({ languages: `${language}` })
+        .then(response => res.json(response))
+        .catch(error => next(error))
+}
+
 
 module.exports = {
     createClass,
     getClasses,
     getOneClass,
     editClass,
+    getClassbySearch,
 }
