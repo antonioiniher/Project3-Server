@@ -2,8 +2,7 @@ const User = require("../models/User.model")
 
 const getUserById = (req, res, next) => {
 
-    // TODO: OBTENER SIEMPRE EL USUARIO LOGUEADO DE REQ.PAYLOAD
-    const { user_id: _id } = req.params
+    const { _id } = req.payload
 
     User
         .findById(_id)
@@ -14,7 +13,7 @@ const getUserById = (req, res, next) => {
 
 const editUserById = (req, res, next) => {
 
-    const { user_id: _id } = req.params
+    const { _id } = req.payload
 
     const { email, username, description, role, avatar, address, phoneNumber, idSkype } = req.body
 
@@ -27,7 +26,7 @@ const editUserById = (req, res, next) => {
 
 const deleteUserById = (req, res, next) => {
 
-    const { user_id: _id } = req.params
+    const { _id } = req.payload
 
     User
         .findByIdAndDelete(_id)

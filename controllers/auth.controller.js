@@ -38,7 +38,7 @@ const logIn = (req, res, next) => {
     const { email, password } = req.body
 
     if (email === '' || password === '') {
-        res.status(400).json({ message: "Los campos de email y contraseña son obligatorios." });
+        res.status(400).json({ message: "Los campos de email y contraseña son obligatorios." })
         return;
     }
 
