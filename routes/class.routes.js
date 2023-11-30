@@ -15,7 +15,7 @@ router.put("/edit/:class_id", verifyToken)
 
 router.delete("/delete/:class_id", verifyToken)
 
-router.get("", getClassbySearch)
+router.get("/", getClassbySearch)
 
 
 module.exports = router

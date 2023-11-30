@@ -45,14 +45,54 @@ const editClass = (req, res, next) => {
 }
 
 const getClassbySearch = (req, res, next) => {
-    const language = req.query.language
-    const city = req.query.city
-    const classType = req.query.classType
 
-    Class
-        .find({ languages: `${language}` })
-        .then(response => res.json(response))
-        .catch(error => next(error))
+    const { language } = req.query
+    // const city = req.query.city
+    const { classType } = req.query
+
+    console.log(language, classType)
+
+    if (language === undefined && classType === undefined) {
+
+        Class
+            .find()
+            .populate('owner')
+            .select({ title: 1, languages: 1, classType: 1, owner: 1 })
+            .then(response => {
+                return res.json(response)
+            })
+            .catch(err => next(err))
+
+    } else if (language !== undefined && classType !== undefined) {
+
+        Class
+            .find({ languages: language, classType: classType })
+            .populate('owner')
+            .then(response => {
+                return res.json(response)
+            })
+            .catch(error => next(error))
+
+    } else if (language !== undefined && classType === undefined) {
+
+        Class
+            .find({ languages: language })
+            .populate('owner')
+            .then(response => {
+                return res.json(response)
+            })
+            .catch(error => next(error))
+
+    } else if (language === undefined && classType !== undefined) {
+
+        Class
+            .find({ classType: classType })
+            .populate('owner')
+            .then(response => {
+                return res.json(response)
+            })
+            .catch(error => next(error))
+    }
 }
 
 
