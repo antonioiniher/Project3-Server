@@ -50,8 +50,6 @@ const getClassbySearch = (req, res, next) => {
     // const city = req.query.city
     const { classType } = req.query
 
-    console.log(language, classType)
-
     if (language === undefined && classType === undefined) {
 
         Class
@@ -95,6 +93,17 @@ const getClassbySearch = (req, res, next) => {
     }
 }
 
+const putClassRequest = (req, res, next) => {
+
+    const { class_id } = req.params
+    const { student_id } = req.body
+
+    Class
+        .findByIdAndUpdate(class_id, { $push: { booking: { student: { student_id } } } })
+        .then(response => res.json(response))
+        .catch(error => next(error))
+}
+
 
 module.exports = {
     createClass,
@@ -102,4 +111,5 @@ module.exports = {
     getOneClass,
     editClass,
     getClassbySearch,
+    putClassRequest
 }
