@@ -35,8 +35,22 @@ const deleteUserById = (req, res, next) => {
 
 }
 
+const postUserRating = (req, res, next) => {
+
+    const { owner_id } = req.params
+    const { _id } = req.payload
+    const { rating } = req.body
+
+    User
+        .findByIdAndUpdate(owner_id, { $push: { rating: { user: _id, value: rating } } })
+        .then(() => res.sendStatus(200))
+        .catch(err => next(err))
+
+}
+
 module.exports = {
     getUserById,
     editUserById,
-    deleteUserById
+    deleteUserById,
+    postUserRating
 }

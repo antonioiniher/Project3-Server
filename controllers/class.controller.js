@@ -1,6 +1,5 @@
 const Class = require("../models/Class.model")
 
-
 const createClass = (req, res, next) => {
 
     const { title, description, languages, classType } = req.body
@@ -10,6 +9,7 @@ const createClass = (req, res, next) => {
         .create({ title, description, languages, classType, owner })
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
+
 }
 
 const getClasses = (req, res, next) => {
@@ -20,6 +20,7 @@ const getClasses = (req, res, next) => {
         .select({ title: 1, languages: 1, classType: 1, owner: 1 })
         .then(response => res.json(response))
         .catch(err => next(err))
+
 }
 
 const getOneClass = (req, res, next) => {
@@ -31,6 +32,7 @@ const getOneClass = (req, res, next) => {
         .populate("owner")
         .then(response => res.json(response))
         .catch(err => next(err))
+
 }
 
 const editClass = (req, res, next) => {
@@ -42,12 +44,12 @@ const editClass = (req, res, next) => {
         .findByIdAndUpdate(class_id, { title, description, languages, classType })
         .then(response => res.json(response))
         .catch(err => next(err))
+
 }
 
 const getClassbySearch = (req, res, next) => {
 
     const { language } = req.query
-    // const city = req.query.city
     const { classType } = req.query
 
     console.log(language, classType)
@@ -93,6 +95,7 @@ const getClassbySearch = (req, res, next) => {
             })
             .catch(error => next(error))
     }
+
 }
 
 

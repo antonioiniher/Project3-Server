@@ -9,6 +9,7 @@ router.post('/image', uploaderMiddleware.single('imageData'), (req, res) => {
     }
 
     res.json({ cloudinary_url: req.file.path })
+
 })
 
 module.exports = router

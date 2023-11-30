@@ -14,4 +14,5 @@ module.exports = app => {
 
     const CommentRoutes = require("./comment.routes")
     app.use("/api/comment", CommentRoutes)
+
 }

@@ -26,6 +26,7 @@ const signUp = (req, res, next) => {
             const hashedPassword = bcrypt.hashSync(password, salt)
 
             return User.create({ email, password: hashedPassword, username, description, role, avatar, address, phoneNumber, idSkype })
+
         })
         .then(() => res.sendStatus(201))
         .catch(err => next(err))

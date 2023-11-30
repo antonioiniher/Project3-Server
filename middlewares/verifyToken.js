@@ -15,6 +15,7 @@ function getTokenFromHeaders(req) {
     }
 
     return null
+
 }
 
 module.exports = { verifyToken }
