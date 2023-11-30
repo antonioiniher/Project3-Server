@@ -107,6 +107,16 @@ const putClassRequest = (req, res, next) => {
         .catch(error => next(error))
 }
 
+const getClassByStudent = (req, res, next) => {
+
+    const { student_id } = req.params
+
+    Class
+        .find({ booking: { student_id } })
+        .then(response => json(response))
+        .catch(error => next(error))
+}
+
 
 module.exports = {
     createClass,
@@ -114,5 +124,6 @@ module.exports = {
     getOneClass,
     editClass,
     getClassbySearch,
-    putClassRequest
+    putClassRequest,
+    getClassByStudent
 }
