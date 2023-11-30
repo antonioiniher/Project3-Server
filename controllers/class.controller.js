@@ -118,11 +118,11 @@ const putClassRequest = (req, res, next) => {
 
 const getClassByStudent = (req, res, next) => {
 
-    const { student_id } = req.params
+    const { user_id } = req.payload._id
 
     Class
-        .find({ booking: { student_id } })
-        .then(response => json(response))
+        .find({ booking: { $elemMatch: { student: user_id } } })
+        .then(response => res.json(response))
         .catch(error => next(error))
 }
 
