@@ -7,7 +7,7 @@ const createClass = (req, res, next) => {
 
     Class
         .create({ title, description, languages, classType, owner })
-        .then(() => res.sendStatus(200))
+        .then(() => res.sendStatus(201))
         .catch(err => next(err))
 
 }
@@ -42,57 +42,66 @@ const editClass = (req, res, next) => {
 
     Class
         .findByIdAndUpdate(class_id, { title, description, languages, classType })
-        .then(response => res.json(response))
+        .then(() => res.sendStatus(203))
         .catch(err => next(err))
 
 }
 
 const getClassbySearch = (req, res, next) => {
 
-    const { language } = req.query
-    const { classType } = req.query
+    const { language, classType, searchQuery = {} } = req.query
 
-    if (language === undefined && classType === undefined) {
+    if (language) searchQuery.languages = language
+    if (classType) searchQuery.classType = classType
 
-        Class
-            .find()
-            .populate('owner')
-            .select({ title: 1, languages: 1, classType: 1, owner: 1 })
-            .then(response => {
-                return res.json(response)
-            })
-            .catch(err => next(err))
+    Class
+        .find(searchQuery)
+        .populate('owner')
+        .then(response => res.json(response))
+        .catch(err => next(err))
 
-    } else if (language !== undefined && classType !== undefined) {
 
-        Class
-            .find({ languages: language, classType: classType })
-            .populate('owner')
-            .then(response => {
-                return res.json(response)
-            })
-            .catch(error => next(error))
+    // if (language === undefined && classType === undefined) {
 
-    } else if (language !== undefined && classType === undefined) {
+    //     Class
+    //         .find()
+    //         .populate('owner')
+    //         .select({ title: 1, languages: 1, classType: 1, owner: 1 })
+    //         .then(response => {
+    //             return res.json(response)
+    //         })
+    //         .catch(err => next(err))
 
-        Class
-            .find({ languages: language })
-            .populate('owner')
-            .then(response => {
-                return res.json(response)
-            })
-            .catch(error => next(error))
+    // } else if (language !== undefined && classType !== undefined) {
 
-    } else if (language === undefined && classType !== undefined) {
+    //     Class
+    //         .find({ languages: language, classType: classType })
+    //         .populate('owner')
+    //         .then(response => {
+    //             return res.json(response)
+    //         })
+    //         .catch(error => next(error))
 
-        Class
-            .find({ classType: classType })
-            .populate('owner')
-            .then(response => {
-                return res.json(response)
-            })
-            .catch(error => next(error))
-    }
+    // } else if (language !== undefined && classType === undefined) {
+
+    //     Class
+    //         .find({ languages: language })
+    //         .populate('owner')
+    //         .then(response => {
+    //             return res.json(response)
+    //         })
+    //         .catch(error => next(error))
+
+    // } else if (language === undefined && classType !== undefined) {
+
+    //     Class
+    //         .find({ classType: classType })
+    //         .populate('owner')
+    //         .then(response => {
+    //             return res.json(response)
+    //         })
+    //         .catch(error => next(error))
+    // }
 
 }
 
@@ -102,7 +111,7 @@ const putClassRequest = (req, res, next) => {
     const { student_id } = req.body
 
     Class
-        .findByIdAndUpdate(class_id, { $push: { booking: { student: { student_id } } } })
+        .findByIdAndUpdate(class_id, { $push: { booking: { student: student_id } } })
         .then(response => res.json(response))
         .catch(error => next(error))
 }

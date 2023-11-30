@@ -2,6 +2,7 @@ const User = require("../models/User.model")
 
 const getUserById = (req, res, next) => {
 
+    // TODO: OBTENER SIEMPRE EL USUARIO LOGUEADO DE REQ.PAYLOAD
     const { user_id: _id } = req.params
 
     User
@@ -45,7 +46,6 @@ const postUserRating = (req, res, next) => {
         .findByIdAndUpdate(owner_id, { $push: { rating: { user: _id, value: rating } } })
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
-
 }
 
 module.exports = {
