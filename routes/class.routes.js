@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const { verifyToken } = require("../middlewares/verifyToken")
-const { createClass, getClasses, getOneClass, getClassbySearch } = require("../controllers/class.controller")
+const { createClass, getClasses, getOneClass, getClassbySearch, putClassRequest } = require("../controllers/class.controller")
 
 router.get("/all", getClasses)
 
@@ -15,5 +15,7 @@ router.put("/edit/:class_id", verifyToken)
 router.delete("/delete/:class_id", verifyToken)
 
 router.get("/", getClassbySearch)
+
+router.put("/putClassRequest/:class_id", verifyToken, putClassRequest)
 
 module.exports = router

@@ -19,20 +19,23 @@ const classSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
-        students: [{
-            type: Schema.Types.ObjectId,
-            ref: 'User'
+        booking: [{
+            students: {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            status: {
+                type: String,
+                enum: ["Pending", "Accepted", "Cancelled"],
+                default: "Pending"
+            }
         }],
         classType: {
             type: String,
             enum: ['On-site', 'Hybrid', 'Remote'],
             required: [true, 'El tipo de clase es obligatorio.']
         },
-        status: {
-            type: String,
-            enum: ["Pending", "Accepted", "Cancelled"],
-            default: "Pending"
-        }
+
     },
     {
         timestamps: true
