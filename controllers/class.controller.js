@@ -110,8 +110,9 @@ const putClassRequest = (req, res, next) => {
     const { class_id } = req.params
     const { student_id } = req.body
 
+
     Class
-        .findByIdAndUpdate(class_id, { $push: { booking: { student: student_id } } })
+        .findByIdAndUpdate(class_id, { $addToSet: { booking: { students: student_id } } })
         .then(response => res.json(response))
         .catch(error => next(error))
 }
@@ -126,6 +127,17 @@ const getClassByStudent = (req, res, next) => {
         .catch(error => next(error))
 }
 
+const getClassByTeacher = (req, res, next) => {
+
+    const _id = req.payload
+    console.log(_id)
+
+    Class
+        .find({ owner: _id })
+        .then(res => res.json(res))
+        .catch(error => next(error))
+}
+
 
 module.exports = {
     createClass,
@@ -134,5 +146,6 @@ module.exports = {
     editClass,
     getClassbySearch,
     putClassRequest,
-    getClassByStudent
+    getClassByStudent,
+    getClassByTeacher
 }
