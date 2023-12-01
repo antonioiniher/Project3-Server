@@ -2,10 +2,10 @@ const User = require("../models/User.model")
 
 const getUserById = (req, res, next) => {
 
-    const { _id } = req.payload
+    const { user_id } = req.params
 
     User
-        .findById(_id)
+        .findById(user_id)
         .then(user => res.json(user))
         .catch(err => next(err))
 
@@ -13,7 +13,7 @@ const getUserById = (req, res, next) => {
 
 const editUserById = (req, res, next) => {
 
-    const { _id } = req.payload
+    const { _id } = req.params
 
     const { email, username, description, role, avatar, address, phoneNumber, idSkype } = req.body
 
@@ -26,7 +26,7 @@ const editUserById = (req, res, next) => {
 
 const deleteUserById = (req, res, next) => {
 
-    const { _id } = req.payload
+    const { _id } = req.params
 
     User
         .findByIdAndDelete(_id)
