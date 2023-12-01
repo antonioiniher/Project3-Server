@@ -35,7 +35,6 @@ const classSchema = new Schema(
             enum: ['On-site', 'Hybrid', 'Remote'],
             required: [true, 'El tipo de clase es obligatorio.']
         },
-
     },
     {
         timestamps: true
