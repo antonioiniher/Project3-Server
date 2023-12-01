@@ -3,7 +3,7 @@ const { getUserById, editUserById, deleteUserById, postUserRating } = require(".
 const { checkOwnerOr } = require("../middlewares/route-guard")
 const { verifyToken } = require("../middlewares/verifyToken")
 
-router.get('/:user_id',verifyToken, getUserById)
+router.get('/:user_id', getUserById)
 
 router.post('/rating/:owner_id', verifyToken, postUserRating)
 
