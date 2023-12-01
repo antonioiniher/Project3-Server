@@ -1,16 +1,18 @@
 const { Schema, model } = require("mongoose")
+const bcrypt = require('bcryptjs')
 
 const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    required: [true, 'El email de usuario es obligatorio.'],
-    minlength: [10, 'El email necesita mínimo 10 caracteres.'],
+    required: [true, 'El email de usuario es obligatorio'],
+    minlength: [10, 'El email necesita mínimo 10 caracteres'],
     trim: true,
   },
   password: {
     type: String,
-    required: [true, 'La contraseña de usuario es obligatoria.'],
+    required: [true, 'La contraseña de usuario es obligatoria'],
+    minlength: [4, "La contraseña necesita al menos 4 caracteres"]
   },
   username: {
     type: String,
@@ -21,8 +23,8 @@ const userSchema = new Schema({
   description: {
     type: String,
     required: [true, 'La descripción es obligatoria.'],
-    minlength: [20, 'La descripción necesita mínimo 20 caracteres.'],
-    maxlength: [200, 'La descripción acepta máximo 200 caracteres.']
+    minlength: [20, 'La descripción necesita mínimo 20 caracteres'],
+    maxlength: [200, 'La descripción acepta máximo 200 caracteres']
   },
   role: {
     type: String,
@@ -73,6 +75,15 @@ const userSchema = new Schema({
     timestamps: true
   }
 )
+userSchema.pre('save', function (next) {
+
+  const saltRounds = 10
+  const salt = bcrypt.genSaltSync(saltRounds)
+  const hashedPassword = bcrypt.hashSync(this.password, salt)
+  this.password = hashedPassword
+
+  next()
+})
 
 const User = model("User", userSchema)
 

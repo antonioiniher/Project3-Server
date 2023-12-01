@@ -1,33 +1,15 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const User = require("../models/User.model")
-const saltRounds = 10
 
 const signUp = (req, res, next) => {
 
     const { email, password, username, description, role, avatar, street, city, country, phoneNumber, idSkype } = req.body
     const address = { street, city, country }
 
-    if (password.length < 5) {
-        res.status(400).json({ message: 'La contraseña debe tener mínimo 5 caracteres.' })
-        return
-    }
 
     User
-        .findOne({ email })
-        .then((foundUser) => {
-
-            if (foundUser) {
-                res.status(400).json({ message: "Este usuario ya existe." })
-                return
-            }
-
-            const salt = bcrypt.genSaltSync(saltRounds)
-            const hashedPassword = bcrypt.hashSync(password, salt)
-
-            return User.create({ email, password: hashedPassword, username, description, role, avatar, address, phoneNumber, idSkype })
-
-        })
+        .create({ email, password, username, description, role, avatar, address, phoneNumber, idSkype })
         .then(() => res.sendStatus(201))
         .catch(err => next(err))
 
@@ -38,7 +20,7 @@ const logIn = (req, res, next) => {
     const { email, password } = req.body
 
     if (email === '' || password === '') {
-        res.status(400).json({ message: "Los campos de email y contraseña son obligatorios." })
+        res.status(400).json({ errorMessages: ["Los campos de email y contraseña son obligatorios."] })
         return;
     }
 
@@ -47,7 +29,7 @@ const logIn = (req, res, next) => {
         .then((foundUser) => {
 
             if (!foundUser) {
-                res.status(401).json({ message: "Usuario no encontrado." })
+                res.status(401).json({ errorMessages: ["Usuario no encontrado."] })
                 return
             }
 
@@ -66,7 +48,7 @@ const logIn = (req, res, next) => {
 
             }
             else {
-                res.status(401).json({ message: "Contraseña incorrecta." })
+                res.status(401).json({ errorMessages: ["Contraseña incorrecta."] })
             }
 
         })
