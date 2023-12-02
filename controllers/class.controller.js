@@ -140,9 +140,24 @@ const getClassByTeacher = (req, res, next) => {
 
 const searchClassAndAccept = (req, res, next) => {
 
-    const { classes_id, student_id } = req.body
+    const { classes_id, booking_id, status } = req.body
 
-    console.log(classes_id, student_id)
+    console.log(status)
+
+    Class
+        .findById(classes_id)
+        .populate('booking.students')
+        .then(res => {
+            res.booking.forEach(elm => {
+                if (elm._id.toString() === booking_id) {
+                    elm.status = status;
+                }
+            })
+            return res.save()
+        })
+        .then(() => res.sendStatus(200))
+
+        .catch(err => next(err))
 }
 
 

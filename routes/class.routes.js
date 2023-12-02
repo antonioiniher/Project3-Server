@@ -9,6 +9,8 @@ const { createClass,
     getClassByTeacher,
     searchClassAndAccept } = require("../controllers/class.controller")
 
+router.put("/searchClassAndAccept", verifyToken, searchClassAndAccept)
+
 router.get("/all", getClasses)
 
 router.post("/create", verifyToken, createClass)
@@ -18,8 +20,6 @@ router.post("/join", verifyToken)
 router.put("/edit/:class_id", verifyToken)
 
 router.delete("/delete/:class_id", verifyToken)
-
-router.put("/searchClassAndAccept", verifyToken, searchClassAndAccept)
 
 router.get("/", getClassbySearch)
 
