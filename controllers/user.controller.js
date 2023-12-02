@@ -13,23 +13,23 @@ const getUserById = (req, res, next) => {
 
 const editUserById = (req, res, next) => {
 
-    const { _id } = req.params
+    const { user_id } = req.params
 
     const { email, username, description, role, avatar, address, phoneNumber, idSkype } = req.body
 
     User
-        .findByIdAndUpdate(_id, { email, username, description, role, avatar, address, phoneNumber, idSkype })
-        .then(user => res.json(user))
+        .findByIdAndUpdate(user_id, { email, username, description, role, avatar, address, phoneNumber, idSkype })
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 
 }
 
 const deleteUserById = (req, res, next) => {
 
-    const { _id } = req.params
+    const { user_id } = req.params
 
     User
-        .findByIdAndDelete(_id)
+        .findByIdAndDelete(user_id)
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
 
