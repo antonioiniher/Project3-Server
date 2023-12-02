@@ -129,13 +129,20 @@ const getClassByStudent = (req, res, next) => {
 
 const getClassByTeacher = (req, res, next) => {
 
-    const _id = req.payload
-    console.log(_id)
+    const { _id } = req.payload
 
     Class
-        .find({ owner: _id })
-        .then(res => res.json(res))
+        .findOne({ owner: _id })
+        .populate('booking.students')
+        .then(response => res.json(response))
         .catch(error => next(error))
+}
+
+const searchClassAndAccept = (req, res, next) => {
+
+    const { classes_id, student_id } = req.body
+
+    console.log(classes_id, student_id)
 }
 
 
@@ -147,5 +154,6 @@ module.exports = {
     getClassbySearch,
     putClassRequest,
     getClassByStudent,
-    getClassByTeacher
+    getClassByTeacher,
+    searchClassAndAccept
 }
