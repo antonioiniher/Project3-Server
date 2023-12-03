@@ -1,19 +1,22 @@
 const router = require("express").Router()
 const { verifyToken } = require("../middlewares/verifyToken")
-const { createClass,
+const { checkOwnerOr, checkRole } = require("../middlewares/route-guard")
+const {
+    createClass,
     getClasses,
     getOneClass,
     getClassbySearch,
     putClassRequest,
     getClassByStudent,
     getClassByTeacher,
-    searchClassAndAccept } = require("../controllers/class.controller")
+    searchClassAndAccept
+} = require("../controllers/class.controller")
 
 router.put("/searchClassAndAccept", verifyToken, searchClassAndAccept)
 
 router.get("/all", getClasses)
 
-router.post("/create", verifyToken, createClass)
+router.post("/create", verifyToken, checkRole('ADMIN', 'TEACHER'), createClass)
 
 router.post("/join", verifyToken)
 

@@ -24,9 +24,20 @@ const getCommentByTeacher = (req, res, next) => {
 
 }
 
+const deleteComment = (req, res, next) => {
+
+    const { comment_id } = req.params
+
+    Comment
+        .findByIdAndDelete(comment_id)
+        .then(() => res.sendStatus(200))
+        .catch(err => next(err))
+}
+
 module.exports = {
     createComment,
-    getCommentByTeacher
+    getCommentByTeacher,
+    deleteComment
 }
 
 
