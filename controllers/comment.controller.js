@@ -5,8 +5,13 @@ const createComment = (req, res, next) => {
     const { text, teacher } = req.body
     const { _id: user } = req.payload
 
-    Comment
-        .create({ teacher, user, text })
+    Comment.findOne({ teacher, user })
+        .then(existingComment => {
+            if (existingComment) {
+                return res.status(405).json({ errorMessages: ['Ya has comentado en esta clase.'] })
+            }
+            return Comment.create({ teacher, user, text })
+        })
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
 
