@@ -18,8 +18,6 @@ router.get("/all", getClasses)
 
 router.post("/create", verifyToken, checkRole('ADMIN', 'TEACHER'), createClass)
 
-router.post("/join", verifyToken)
-
 router.put("/edit/:class_id", verifyToken)
 
 router.delete("/delete/:class_id", verifyToken)
