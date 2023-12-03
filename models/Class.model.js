@@ -19,6 +19,9 @@ const classSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
+        city: {
+            type: String,
+        },
         booking: [{
             students: {
                 type: Schema.Types.ObjectId,

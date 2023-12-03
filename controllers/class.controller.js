@@ -2,11 +2,11 @@ const Class = require("../models/Class.model")
 
 const createClass = (req, res, next) => {
 
-    const { title, description, languages, classType } = req.body
+    const { title, description, city, languages, classType } = req.body
     const { _id: owner } = req.payload
 
     Class
-        .create({ title, description, languages, classType, owner })
+        .create({ title, description, languages, city, classType, owner })
         .then(() => res.sendStatus(201))
         .catch(err => next(err))
 
@@ -49,18 +49,25 @@ const editClass = (req, res, next) => {
 
 const getClassbySearch = (req, res, next) => {
 
-    const { language, classType, searchQuery = {} } = req.query
+    const { language, classType, city } = req.query
 
-    if (language) searchQuery.languages = language
-    if (classType) searchQuery.classType = classType
+    const regexQuery = {}
+
+    const createRegex = (value) => new RegExp(value, 'i')
+
+    if (language) regexQuery.languages = createRegex(language)
+    if (classType) regexQuery.classType = createRegex(classType)
+    if (city) regexQuery.city = createRegex(city)
+
+    console.log(regexQuery)
 
     Class
-        .find(searchQuery)
+        .find(regexQuery)
         .populate('owner')
         .then(response => res.json(response))
         .catch(err => next(err))
-
 }
+
 
 const putClassRequest = (req, res, next) => {
 
