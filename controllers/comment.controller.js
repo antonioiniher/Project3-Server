@@ -8,7 +8,7 @@ const createComment = (req, res, next) => {
     Comment.findOne({ teacher, user })
         .then(existingComment => {
             if (existingComment) {
-                return res.status(405).json({ errorMessages: ['Ya has comentado en esta clase.'] })
+                return res.status(400).json({ errorMessages: ['Ya has comentado en esta clase.'] })
             }
             return Comment.create({ teacher, user, text })
         })
