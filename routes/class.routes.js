@@ -10,7 +10,8 @@ const {
     getClassByStudent,
     getClassByTeacher,
     searchClassAndSetStatus,
-    editClass
+    editClass,
+    deleteClass
 } = require("../controllers/class.controller")
 
 router.put("/searchClassAndSetStatus", verifyToken, searchClassAndSetStatus)
@@ -21,10 +22,6 @@ router.post("/create", verifyToken, checkRole('ADMIN', 'TEACHER'), createClass)
 
 router.put("/edit/:class_id", verifyToken, editClass)
 
-router.delete("/delete/:class_id", verifyToken)
-
-router.get("getOneClass/:class_id", verifyToken)
-
 router.get("/", getClassbySearch)
 
 router.put("/putClassRequest/:class_id", verifyToken, putClassRequest)
@@ -32,6 +29,8 @@ router.put("/putClassRequest/:class_id", verifyToken, putClassRequest)
 router.get("/getClassByStudent/:student_id", verifyToken, getClassByStudent)
 
 router.get("/getClassByTeacher", verifyToken, getClassByTeacher)
+
+router.delete("/deleteClass/:class_id", verifyToken, deleteClass)
 
 router.get("/:class_id", getOneClass)
 

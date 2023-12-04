@@ -60,8 +60,6 @@ const getClassbySearch = (req, res, next) => {
     if (classType) regexQuery.classType = createRegex(classType)
     if (city) regexQuery.city = createRegex(city)
 
-    console.log(regexQuery)
-
     Class
         .find(regexQuery)
         .populate('owner')
@@ -107,7 +105,6 @@ const searchClassAndSetStatus = (req, res, next) => {
 
     const { classes_id, booking_id, status } = req.body
 
-    console.log(status)
 
     Class
         .findById(classes_id)
@@ -125,6 +122,16 @@ const searchClassAndSetStatus = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const deleteClass = (req, res, next) => {
+
+    const { class_id } = req.params
+
+    Class
+        .findByIdAndDelete(class_id)
+        .then(() => res.sendStatus(200))
+        .catch(error => next(error))
+}
+
 
 module.exports = {
     createClass,
@@ -136,5 +143,6 @@ module.exports = {
     getClassByStudent,
     getClassByTeacher,
     searchClassAndSetStatus,
-    editClass
+    editClass,
+    deleteClass
 }
