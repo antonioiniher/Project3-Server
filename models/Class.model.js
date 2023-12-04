@@ -9,7 +9,8 @@ const classSchema = new Schema(
         description: {
             type: String,
             required: [true, 'La descripción es obligatoria.'],
-            minlength: [20, 'La descripción debe tener mínimo 20 caracteres.']
+            minlength: [20, 'La descripción debe tener mínimo 20 caracteres.'],
+            maxlength: [100, 'La descripción no puede tener más de 50 caracteres.'],
         },
         languages: [{
             type: String,
