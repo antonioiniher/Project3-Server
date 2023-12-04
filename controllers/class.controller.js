@@ -38,10 +38,11 @@ const getOneClass = (req, res, next) => {
 const editClass = (req, res, next) => {
 
     const { class_id } = req.params
-    const { title, description, languages, classType } = req.body
+    const { title, description, languages, city, classType } = req.body.classes
+
 
     Class
-        .findByIdAndUpdate(class_id, { title, description, languages, classType })
+        .findByIdAndUpdate(class_id, { title, description, languages, city, classType })
         .then(() => res.sendStatus(203))
         .catch(err => next(err))
 
@@ -102,7 +103,7 @@ const getClassByTeacher = (req, res, next) => {
         .catch(error => next(error))
 }
 
-const searchClassAndAccept = (req, res, next) => {
+const searchClassAndSetStatus = (req, res, next) => {
 
     const { classes_id, booking_id, status } = req.body
 
@@ -134,5 +135,6 @@ module.exports = {
     putClassRequest,
     getClassByStudent,
     getClassByTeacher,
-    searchClassAndAccept
+    searchClassAndSetStatus,
+    editClass
 }
