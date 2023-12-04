@@ -1,5 +1,9 @@
 const User = require("../models/User.model")
+<<<<<<< HEAD
 const Comment = require("../models/Comment.model")
+=======
+const Class = require("../models/Class.model")
+>>>>>>> 3ae42469181bad5743feb00ed3fabb8a30cdfb78
 
 const getUserById = (req, res, next) => {
 
@@ -27,7 +31,17 @@ const editUserById = (req, res, next) => {
 
 const deleteUserById = (req, res, next) => {
 
+    const { user_id } = req.params
+    const id = user_id.toString()
+
+    Class
+        .deleteMany({ owner: id })
+        .then(() => { return User.findByIdAndDelete(user_id) })
+        .then(() => res.sendStatus(200))
+        .catch(error => next(error))
+
 }
+
 
 const postUserRating = (req, res, next) => {
 
