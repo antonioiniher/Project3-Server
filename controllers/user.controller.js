@@ -41,10 +41,17 @@ const postUserRating = (req, res, next) => {
     const { _id } = req.payload
     const { rating } = req.body
 
-    User
-        .findByIdAndUpdate(owner_id, { $push: { rating: { user: _id, value: rating } } })
+    User.findById(owner_id)
+        .then(user => {
+            const hasRated = user.rating.some(e => e.user.equals(_id))
+            if (hasRated) {
+                return res.status(400).json({ errorMessages: ['Ya has calificado a este usuario'] })
+            }
+            return User.findByIdAndUpdate(owner_id, { $push: { rating: { user: _id, value: rating } } })
+        })
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
+
 }
 
 module.exports = {
