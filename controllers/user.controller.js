@@ -1,4 +1,5 @@
 const User = require("../models/User.model")
+const Class = require("../models/Class.model")
 
 const getUserById = (req, res, next) => {
 
@@ -25,15 +26,16 @@ const editUserById = (req, res, next) => {
 }
 
 const deleteUserById = (req, res, next) => {
-
     const { user_id } = req.params
+    const id = user_id.toString()
 
-    User
-        .findByIdAndDelete(user_id)
+    Class
+        .deleteMany({ owner: id })
+        .then(() => { return User.findByIdAndDelete(user_id) })
         .then(() => res.sendStatus(200))
-        .catch(err => next(err))
-
+        .catch(error => next(error))
 }
+
 
 const postUserRating = (req, res, next) => {
 
