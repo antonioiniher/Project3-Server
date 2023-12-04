@@ -112,7 +112,7 @@ const searchClassAndSetStatus = (req, res, next) => {
         .then(res => {
             res.booking.forEach(elm => {
                 if (elm._id.toString() === booking_id) {
-                    elm.status = status;
+                    elm.status = status
                 }
             })
             return res.save()

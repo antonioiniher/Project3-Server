@@ -1,4 +1,5 @@
 const User = require("../models/User.model")
+const Comment = require("../models/Comment.model")
 
 const getUserById = (req, res, next) => {
 
@@ -25,13 +26,6 @@ const editUserById = (req, res, next) => {
 }
 
 const deleteUserById = (req, res, next) => {
-
-    const { user_id } = req.params
-
-    User
-        .findByIdAndDelete(user_id)
-        .then(() => res.sendStatus(200))
-        .catch(err => next(err))
 
 }
 
