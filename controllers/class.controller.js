@@ -71,11 +71,11 @@ const getClassbySearch = (req, res, next) => {
 const putClassRequest = (req, res, next) => {
 
     const { class_id } = req.params
-    const { student_id } = req.body
+    const { student_id, date } = req.body
 
 
     Class
-        .findByIdAndUpdate(class_id, { $addToSet: { booking: { students: student_id } } })
+        .findByIdAndUpdate(class_id, { $addToSet: { booking: { students: student_id, date: date } } })
         .then(response => res.json(response))
         .catch(error => next(error))
 }

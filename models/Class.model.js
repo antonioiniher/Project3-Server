@@ -32,6 +32,10 @@ const classSchema = new Schema(
                 type: String,
                 enum: ["Pending", "Accepted", "Cancelled"],
                 default: "Pending"
+            },
+            date: {
+                type: Date,
+                required: [true, 'La fecha es obligatoria.']
             }
         }],
         classType: {
