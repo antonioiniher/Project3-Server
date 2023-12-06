@@ -1,6 +1,5 @@
 module.exports = app => {
 
-    // TODO: REVISAR OPCIONES DE ORDENACIÓN CON SORT
     const AuthRoutes = require("./auth.routes")
     app.use("/api/auth", AuthRoutes)
 

@@ -40,7 +40,6 @@ const editClass = (req, res, next) => {
     const { class_id } = req.params
     const { title, description, languages, city, classType } = req.body.classes
 
-
     Class
         .findByIdAndUpdate(class_id, { title, description, languages, city, classType })
         .then(() => res.sendStatus(203))
@@ -65,6 +64,7 @@ const getClassbySearch = (req, res, next) => {
         .populate('owner')
         .then(response => res.json(response))
         .catch(err => next(err))
+
 }
 
 
@@ -73,11 +73,11 @@ const putClassRequest = (req, res, next) => {
     const { class_id } = req.params
     const { student_id, date } = req.body
 
-
     Class
-        .findByIdAndUpdate(class_id, { $addToSet: { booking: { students: student_id, date: date } } })
-        .then(response => res.json(response))
+        .findByIdAndUpdate(class_id, { $addToSet: { booking: { students: student_id, date } } })
+        .then(() => res.sendStatus(200))
         .catch(error => next(error))
+
 }
 
 const getClassByStudent = (req, res, next) => {
@@ -88,23 +88,24 @@ const getClassByStudent = (req, res, next) => {
         .find({ booking: { $elemMatch: { student: user_id } } })
         .then(response => res.json(response))
         .catch(error => next(error))
+
 }
 
 const getClassByTeacher = (req, res, next) => {
 
-    const { _id } = req.payload
+    const { _id: owner } = req.payload
 
     Class
-        .findOne({ owner: _id })
+        .findOne({ owner })
         .populate('booking.students')
         .then(response => res.json(response))
         .catch(error => next(error))
+
 }
 
 const searchClassAndSetStatus = (req, res, next) => {
 
     const { classes_id, booking_id, status } = req.body
-
 
     Class
         .findById(classes_id)
@@ -120,6 +121,7 @@ const searchClassAndSetStatus = (req, res, next) => {
         .then(() => res.sendStatus(200))
 
         .catch(err => next(err))
+
 }
 
 const deleteClass = (req, res, next) => {
@@ -130,6 +132,7 @@ const deleteClass = (req, res, next) => {
         .findByIdAndDelete(class_id)
         .then(() => res.sendStatus(200))
         .catch(error => next(error))
+
 }
 
 

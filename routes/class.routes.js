@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const { verifyToken } = require("../middlewares/verifyToken")
-const { checkOwnerOr, checkRole } = require("../middlewares/route-guard")
+const { checkRole } = require("../middlewares/route-guard")
 const {
     createClass,
     getClasses,

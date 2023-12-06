@@ -11,6 +11,4 @@ router.post('/rating/:owner_id', verifyToken, postUserRating)
 
 router.get('/:user_id', getUserById)
 
-
-
 module.exports = router

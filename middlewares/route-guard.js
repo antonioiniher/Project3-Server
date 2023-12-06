@@ -4,9 +4,8 @@ const checkRole = (...admittedRoles) => (req, res, next) => {
 
     if (admittedRoles.includes(role)) {
         next()
-    }
-    else {
-        res.status(403).json({ message: 'No puedes acceder aqui.' })
+    } else {
+        res.status(403).json({ errorMessages: ['No puedes acceder aqui.'] })
     }
 
 }
@@ -19,7 +18,7 @@ const checkOwnerOr = (...admittedRoles) => (req, res, next) => {
     if (admittedRoles.includes(role) || _id === user_id) {
         next()
     } else {
-        res.status(403).json({ message: 'No puedes acceder aqui.' })
+        res.status(403).json({ errorMessages: ['No puedes acceder aqui.'] })
     }
 
 }

@@ -19,10 +19,10 @@ const createComment = (req, res, next) => {
 
 const getCommentByTeacher = (req, res, next) => {
 
-    const { teacher_id } = req.params
+    const { teacher_id: teacher } = req.params
 
     Comment
-        .find({ teacher: teacher_id })
+        .find({ teacher })
         .populate('user')
         .then(response => res.json(response))
         .catch(err => next(err))
@@ -37,6 +37,7 @@ const deleteComment = (req, res, next) => {
         .findByIdAndDelete(comment_id)
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
+
 }
 
 module.exports = {

@@ -46,8 +46,7 @@ const logIn = (req, res, next) => {
 
                 res.json({ authToken })
 
-            }
-            else {
+            } else {
                 res.status(401).json({ errorMessages: ["Contraseña incorrecta."] })
             }
 
