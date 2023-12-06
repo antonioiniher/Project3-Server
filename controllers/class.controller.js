@@ -23,6 +23,26 @@ const getClasses = (req, res, next) => {
 
 }
 
+const filterByStatus = (req, res, next) => {
+
+    const { teacher_id: teacher } = req.params
+    const { _id: student } = req.payload
+
+    Class
+        .find({ owner: teacher })
+        .then(response => {
+            response.forEach(e => {
+                e.booking.forEach(booking => {
+                    if (booking.students.toString() === student && booking.status === 'Accepted') {
+                        return res.json(booking)
+                    }
+                })
+            })
+        })
+        .catch(err => next(err))
+}
+
+
 const getOneClass = (req, res, next) => {
 
     const { class_id } = req.params
@@ -121,7 +141,6 @@ const searchClassAndSetStatus = (req, res, next) => {
         .then(() => res.sendStatus(200))
 
         .catch(err => next(err))
-
 }
 
 const deleteClass = (req, res, next) => {
@@ -147,5 +166,6 @@ module.exports = {
     getClassByTeacher,
     searchClassAndSetStatus,
     editClass,
-    deleteClass
+    deleteClass,
+    filterByStatus
 }
