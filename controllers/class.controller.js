@@ -5,12 +5,18 @@ const createClass = (req, res, next) => {
     const { title, description, city, languages, classType } = req.body
     const { _id: owner } = req.payload
 
-    Class
-        .create({ title, description, languages, city, classType, owner })
+    Class.findOne({ owner })
+        .then(existingClass => {
+            if (existingClass) {
+                return res.status(400).json({ errorMessages: ['Ya tienes una clase creada.'] })
+            }
+            return Class.create({ title, description, languages, city, classType, owner })
+        })
         .then(() => res.sendStatus(201))
         .catch(err => next(err))
 
 }
+
 
 const getClasses = (req, res, next) => {
 
